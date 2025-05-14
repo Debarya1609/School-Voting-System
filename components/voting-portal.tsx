@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { AlertCircle, CheckCircle2, Info } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { VoterVerification } from "./voter-verification"
 
 // Mock data for nominees
 const positions = [
@@ -119,6 +120,7 @@ const positions = [
 
 export function VotingPortal() {
   const router = useRouter()
+  const [isVerified, setIsVerified] = useState(false)
   const [votes, setVotes] = useState({})
   const [currentStep, setCurrentStep] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -171,7 +173,15 @@ export function VotingPortal() {
     }, 1500)
   }
 
+  const handleVerified = () => {
+    setIsVerified(true)
+  }
+
   const currentPosition = positions[currentStep]
+
+  if (!isVerified) {
+    return <VoterVerification onVerified={handleVerified} />
+  }
 
   return (
     <Card className="w-full">
