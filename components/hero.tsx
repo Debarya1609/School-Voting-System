@@ -29,7 +29,7 @@ export function Hero() {
             </div>
           </div>
           <img
-            src="/373580797_6274900949281554_3047544253400664157_n.jpg?height=550&width=550"
+            src="/https://scontent.fccu20-1.fna.fbcdn.net/v/t39.30808-6/373580797_6274900949281554_3047544253400664157_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=UKQG5WcQ6qYQ7kNvwEF9gn7&_nc_oc=Adm5cVr2R_6sYk96i5jGvNHKFOJ7hOSmIyu8Whqc6xydh_RbqbRUCB--Bd8jX90FroGNtF69droYLK_hfSaU1m3X&_nc_zt=23&_nc_ht=scontent.fccu20-1.fna&_nc_gid=7hQumYlV8fzCwHQ2ftorWQ&oh=00_AfKRIM9tJM3xk287oW6TW9wVJ4n6WcPeNIXKxj_upGW3bA&oe=682C04BE?height=550&width=550"
             alt="School Election"
             className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
             width={550}
