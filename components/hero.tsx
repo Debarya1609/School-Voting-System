@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Image from "next/image"
+import NextImage from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
@@ -29,7 +29,7 @@ export function Hero() {
               </Button>
             </div>
           </div>
-          <Image
+          <NextImage
             src="/logo.png"
             alt="Narayana School Logo"
             width={400}

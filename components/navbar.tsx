@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
+import NextImage from "next/image"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
@@ -13,7 +13,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="Narayana School Logo" width={32} height={32} className="rounded-full" />
+          <NextImage src="/logo.png" alt="Narayana School Logo" width={32} height={32} className="rounded-full" />
           <span className="text-xl font-bold">SchoolVote</span>
         </Link>
         <nav className="hidden md:flex md:gap-6">

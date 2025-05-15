@@ -5,7 +5,6 @@ import { Features } from "@/components/features"
 import { HowItWorks } from "@/components/how-it-works"
 import { Testimonials } from "@/components/testimonials"
 import { CallToAction } from "@/components/call-to-action"
-import { AdminSpotlight } from "@/components/admin-spotlight"
 
 export default function Home() {
   return (
@@ -15,7 +14,6 @@ export default function Home() {
         <Hero />
         <Features />
         <HowItWorks />
-        <AdminSpotlight />
         <Testimonials />
         <CallToAction />
       </main>
