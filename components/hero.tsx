@@ -29,7 +29,7 @@ export function Hero() {
             </div>
           </div>
           <img
-            src="/placeholder.svg?height=550&width=550"
+            src="/373580797_6274900949281554_3047544253400664157_n.jpg?height=550&width=550"
             alt="School Election"
             className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
             width={550}
