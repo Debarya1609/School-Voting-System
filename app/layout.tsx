@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body className="mx-auto max-w-screen-2xl">{children}</body>
+      <body className="mx-auto max-w-screen-2x2">{children}</body>
     </html>
   )
 }
