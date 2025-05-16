@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "SchoolVote | Narayana School - Bally",
   description: "A secure and transparent platform for school elections",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
   },
     generator: 'v0.dev'
 }
