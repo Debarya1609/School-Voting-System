@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "SchoolVote | Narayana School - Bally",
   description: "A secure and transparent platform for school elections",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.png", // <-- updated here to your custom favicon image
   },
     generator: 'v0.dev'
 }
@@ -20,10 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body className="flex min-h-screen flex-col items-center">
-        {/* Ensures layout is centered and respects max width */}
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
-          {children}
-        </div>
+        <div className="w-full max-w-[1400px] mx-auto">{children}</div>
       </body>
     </html>
   )
