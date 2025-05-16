@@ -19,8 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body className="min-h-screen bg-white text-black">
-        <div className="container mx-auto px-4 md:px-6">{children}</div>
+      <body className="flex min-h-screen flex-col items-center">
+        {/* Ensures layout is centered and respects max width */}
+        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
+          {children}
+        </div>
       </body>
     </html>
   )
