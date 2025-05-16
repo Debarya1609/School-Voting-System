@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Trophy, Medal } from "lucide-react"
+import { Trophy, Medal, Clock, AlertTriangle } from "lucide-react"
 import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, Cell } from "recharts"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 // Mock data for election results
 const results = [
@@ -143,6 +144,9 @@ const chartColors = ["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"]
 
 export function ResultsDisplay() {
   const [activeTab, setActiveTab] = useState(results[0].id)
+  const [resultsVisible, setResultsVisible] = useState(false)
+  const [releaseDate, setReleaseDate] = useState(new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)) // 2 days from now
+  const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   // Format data for the current position's chart
   const getChartData = (positionId) => {
@@ -152,6 +156,95 @@ export function ResultsDisplay() {
       votes: nominee.votes,
       percentage: nominee.percentage,
     }))
+  }
+
+  // In a real app, this would be fetched from an API
+  useEffect(() => {
+    // Simulate API call to check if results are visible
+    const checkResultsVisibility = async () => {
+      // This would be a real API call in production
+      // For demo, we'll just set it to false
+      setResultsVisible(false)
+    }
+
+    checkResultsVisibility()
+  }, [])
+
+  // Update countdown timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date()
+      const difference = releaseDate.getTime() - now.getTime()
+
+      if (difference <= 0) {
+        clearInterval(timer)
+        setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+        return
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+
+      setTimeRemaining({ days, hours, minutes, seconds })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [releaseDate])
+
+  if (!resultsVisible) {
+    return (
+      <div className="space-y-8">
+        <Card>
+          <CardHeader>
+            <CardTitle>Results Not Available Yet</CardTitle>
+            <CardDescription>The election results will be published soon</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center justify-center py-12">
+            <AlertTriangle className="h-16 w-16 text-amber-500 mb-6" />
+            <h3 className="text-2xl font-bold mb-2">Results will be announced soon</h3>
+            <p className="text-gray-500 mb-8 text-center max-w-md">
+              The voting process is still ongoing or the results are being verified. Please check back later.
+            </p>
+
+            <div className="bg-gray-50 rounded-lg p-6 w-full max-w-md">
+              <h4 className="text-lg font-medium mb-4 flex items-center">
+                <Clock className="mr-2 h-5 w-5 text-blue-600" />
+                Results will be published in:
+              </h4>
+
+              <div className="grid grid-cols-4 gap-2 text-center">
+                <div className="bg-white rounded-lg p-3 shadow-sm">
+                  <div className="text-2xl font-bold text-blue-600">{timeRemaining.days}</div>
+                  <div className="text-xs text-gray-500">Days</div>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-sm">
+                  <div className="text-2xl font-bold text-blue-600">{timeRemaining.hours}</div>
+                  <div className="text-xs text-gray-500">Hours</div>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-sm">
+                  <div className="text-2xl font-bold text-blue-600">{timeRemaining.minutes}</div>
+                  <div className="text-xs text-gray-500">Minutes</div>
+                </div>
+                <div className="bg-white rounded-lg p-3 shadow-sm">
+                  <div className="text-2xl font-bold text-blue-600">{timeRemaining.seconds}</div>
+                  <div className="text-xs text-gray-500">Seconds</div>
+                </div>
+              </div>
+
+              <Alert className="mt-6 bg-blue-50 border-blue-200">
+                <AlertTitle className="text-blue-800">Stay Updated</AlertTitle>
+                <AlertDescription className="text-blue-700">
+                  Check back on {releaseDate.toLocaleDateString()} at {releaseDate.toLocaleTimeString()} to view the
+                  election results.
+                </AlertDescription>
+              </Alert>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
   }
 
   return (
