@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body className="flex min-h-screen flex-col items-center">
-        <div className="w-full max-w-[1400px] mx-auto">{children}</div>
+      <body className="min-h-screen bg-white text-black">
+        <div className="container mx-auto px-4 md:px-6">{children}</div>
       </body>
     </html>
   )
