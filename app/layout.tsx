@@ -1,13 +1,14 @@
 import type React from "react"
-import type { Metadata } from "next"
-import "./globals.css"
+import "@/app/globals.css"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/components/theme-provider"
+import NoisePattern from "@/components/noise-pattern"
 
-export const metadata: Metadata = {
-  title: "SchoolVote | Narayana School - Bally",
-  description: "A secure and transparent platform for school elections",
-  icons: {
-    icon: "/favicon.ico",
-  },
+const inter = Inter({ subsets: ["latin"] })
+
+export const metadata = {
+  title: "Developer Portfolio",
+  description: "Portfolio website with interactive gradient background",
     generator: 'v0.dev'
 }
 
@@ -17,13 +18,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <head />
-      <body className="flex min-h-screen flex-col items-center">
-        {/* Ensures layout is centered and respects max width */}
-        <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <NoisePattern />
           {children}
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   )

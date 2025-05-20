@@ -1,120 +1,102 @@
 "use client"
 
-import Link from "next/link"
-import NextImage from "next/image"
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import { Menu, X } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 
-export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [activeLink, setActiveLink] = useState("/")
+const navLinks = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Projects", href: "#projects" },
+  { name: "Certificates", href: "#certificates" },
+  { name: "Contact", href: "#contact" },
+]
 
-  // Handle scroll effect for navbar
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
+
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true)
+      if (window.scrollY > 10) {
+        setIsScrolled(true)
       } else {
-        setScrolled(false)
+        setIsScrolled(false)
       }
     }
 
     window.addEventListener("scroll", handleScroll)
-
-    // Set active link based on current path
-    setActiveLink(window.location.pathname)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white border-b"
-      }`}
+      className={cn(
+        "fixed top-0 w-full z-50 transition-all duration-300",
+        isScrolled ? "bg-white/60 dark:bg-slate-900/60 backdrop-blur-md shadow-sm" : "bg-transparent backdrop-blur-sm",
+      )}
     >
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="overflow-hidden rounded-full transition-transform duration-300 group-hover:scale-110">
-            <NextImage src="/logo.png" alt="Narayana School Logo" width={32} height={32} className="rounded-full" />
-          </div>
-          <span className="text-xl font-bold transition-colors duration-300 group-hover:text-blue-600">SchoolVote</span>
-        </Link>
-        <nav className="hidden md:flex md:gap-8">
-          {[
-            { href: "/", label: "Home" },
-            { href: "/register", label: "Register" },
-            { href: "/vote", label: "Vote" },
-            { href: "/nominees", label: "Nominees" },
-            { href: "/results", label: "Results" },
-            { href: "/admin", label: "Admin" },
-          ].map((link) => (
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex-shrink-0">
             <Link
-              key={link.href}
-              href={link.href}
-              className={`nav-link text-sm font-medium ${
-                activeLink === link.href ? "text-blue-600" : "text-gray-900 hover:text-blue-600"
-              }`}
+              href="#home"
+              className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent"
             >
-              {link.label}
+              Debojit
             </Link>
-          ))}
-        </nav>
-        <div className="hidden md:flex md:gap-4">
-          <Button asChild variant="outline" className="hover-lift">
-            <Link href="/register">Register</Link>
-          </Button>
-          <Button asChild className="button-primary">
-            <Link href="/vote">Vote Now</Link>
-          </Button>
+          </div>
+
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-center space-x-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={cn(
+                    "px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    "text-gray-700 hover:text-purple-600 dark:text-gray-200 dark:hover:text-purple-400",
+                  )}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <ThemeToggle />
+            </div>
+          </div>
+
+          <div className="md:hidden flex items-center">
+            <ThemeToggle />
+            <Button variant="ghost" size="icon" className="ml-2" onClick={() => setIsOpen(!isOpen)}>
+              <span className="sr-only">Open menu</span>
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
-        <button
-          className="inline-flex items-center justify-center rounded-md p-2 text-gray-900 transition-colors hover:bg-gray-100 md:hidden"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          <span className="sr-only">Toggle menu</span>
-        </button>
       </div>
-      {isMenuOpen && (
-        <div className="container animate-fade-in px-4 pb-6 md:hidden md:px-6">
-          <nav className="flex flex-col gap-4">
-            {[
-              { href: "/", label: "Home" },
-              { href: "/register", label: "Register" },
-              { href: "/vote", label: "Vote" },
-              { href: "/nominees", label: "Nominees" },
-              { href: "/results", label: "Results" },
-              { href: "/admin", label: "Admin" },
-            ].map((link, index) => (
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white dark:bg-slate-900 shadow-lg">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {navLinks.map((link) => (
               <Link
-                key={link.href}
+                key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-all duration-300 ${
-                  activeLink === link.href ? "text-blue-600" : "text-gray-900 hover:text-blue-600"
-                }`}
-                style={{ animationDelay: `${index * 0.05}s` }}
-                onClick={() => setIsMenuOpen(false)}
+                className={cn(
+                  "block px-3 py-2 rounded-md text-base font-medium",
+                  "text-gray-700 hover:text-purple-600 dark:text-gray-200 dark:hover:text-purple-400",
+                )}
+                onClick={() => setIsOpen(false)}
               >
-                {link.label}
+                {link.name}
               </Link>
             ))}
-          </nav>
-          <div className="mt-6 flex flex-col gap-4">
-            <Button asChild variant="outline" className="w-full hover-lift">
-              <Link href="/register" onClick={() => setIsMenuOpen(false)}>
-                Register
-              </Link>
-            </Button>
-            <Button asChild className="w-full button-primary">
-              <Link href="/vote" onClick={() => setIsMenuOpen(false)}>
-                Vote Now
-              </Link>
-            </Button>
           </div>
         </div>
       )}

@@ -1,21 +1,29 @@
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Hero } from "@/components/hero"
-import { Features } from "@/components/features"
-import { HowItWorks } from "@/components/how-it-works"
-import { Testimonials } from "@/components/testimonials"
-import { CallToAction } from "@/components/call-to-action"
+import GradientBackground from "@/components/gradient-background"
+import NoiseOverlay from "@/components/noise-overlay"
+import Navbar from "@/components/navbar"
+import Hero from "@/components/hero"
+import About from "@/components/about"
+import Projects from "@/components/projects"
+import Certificates from "@/components/certificates"
+import Skills from "@/components/skills"
+import Testimonials from "@/components/testimonials"
+import Contact from "@/components/contact"
+import Footer from "@/components/footer"
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="min-h-screen">
+      <GradientBackground />
+      <NoiseOverlay />
       <Navbar />
-      <main className="flex-1">
+      <main>
         <Hero />
-        <Features />
-        <HowItWorks />
+        <About />
+        <Projects />
+        <Certificates />
+        <Skills />
         <Testimonials />
-        <CallToAction />
+        <Contact />
       </main>
       <Footer />
     </div>
